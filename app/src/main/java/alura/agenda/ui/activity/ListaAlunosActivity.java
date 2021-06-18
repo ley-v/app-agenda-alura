@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     public static final String TITULO_APPBAR = "Lista de alunos";
     private final AlunoDAO dao = new AlunoDAO();
     private ListView listaDeAlunos;
+    private ArrayAdapter<Aluno> adapter;
 
 
     @Override
@@ -33,6 +35,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_alunos);
         setTitle(TITULO_APPBAR);
         configuraFabNovoAluno();
+        configuraLista();
+
         dao.salvar(new Aluno("Milly", "111", "milly@gmail.com"));
         dao.salvar(new Aluno("Britt", "222", "britt@gmail.com"));
     }
@@ -54,15 +58,37 @@ public class ListaAlunosActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        configuraLista();
+        atualizaAlunos();
+    }
+
+    private void atualizaAlunos() {
+        adapter.clear();
+        adapter.addAll(dao.todos());
     }
 
     private void configuraLista() {
-        List<Aluno> alunos = dao.todos();
         listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
 
-        configuraAdapter(alunos);
+        configuraAdapter();
         configuraListenerDeCliquePorItem();
+
+        configuraListenerDeCliqueLongoPorItem();
+    }
+
+    private void configuraListenerDeCliqueLongoPorItem() {
+        listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Aluno alunoSelecionado = (Aluno) parent.getItemAtPosition(position);
+                remove(alunoSelecionado);
+                return true;
+            }
+        });
+    }
+
+    private void remove(Aluno aluno) {
+        dao.remover(aluno);
+        adapter.remove(aluno);
     }
 
     private void configuraListenerDeCliquePorItem() {
@@ -81,7 +107,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
         startActivity(vaiParaFormularioActivity);
     }
 
-    private void configuraAdapter(List<Aluno> alunos) {
-        listaDeAlunos.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos));
+    private void configuraAdapter() {
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        listaDeAlunos.setAdapter(adapter);
     }
 }
