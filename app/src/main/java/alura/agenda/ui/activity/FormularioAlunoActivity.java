@@ -1,11 +1,14 @@
 package alura.agenda.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.Serializable;
 
 import alura.agenda.R;
 import alura.agenda.dao.AlunoDAO;
@@ -24,13 +27,19 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_aluno);
-
         setTitle(TITULO_APPBAR);
-
-
         inicializacaoDosCampos();
-
         configuraBotaoSalvar();
+
+        Intent dados = getIntent();
+        if (dados.hasExtra("chaveAluno")) {
+
+            Aluno aluno = (Aluno) dados.getSerializableExtra("chaveAluno");
+            campoNome.setText(aluno.getNome());
+            campoTelefone.setText(aluno.getTelefone());
+            campoEmail.setText(aluno.getEmail());
+        }
+
     }
 
     private void configuraBotaoSalvar() {

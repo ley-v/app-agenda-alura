@@ -2,7 +2,9 @@ package alura.agenda.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import java.util.List;
 
 import alura.agenda.R;
 import alura.agenda.dao.AlunoDAO;
+import alura.agenda.model.Aluno;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 
@@ -32,6 +35,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_alunos);
         setTitle(TITULO_APPBAR);
         configuraFabNovoAluno();
+        dao.salvar(new Aluno("Milly", "111", "milly@gmail.com"));
+        dao.salvar(new Aluno("Britt", "222", "britt@gmail.com"));
     }
 
     private void configuraFabNovoAluno() {
@@ -45,7 +50,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void abreFormularioAlunoActivity() {
-        startActivity(new Intent( this, FormularioAlunoActivity.class));
+        startActivity(new Intent(this, FormularioAlunoActivity.class));
     }
 
     @Override
@@ -55,7 +60,18 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void configuraLista() {
+        List<Aluno> alunos = dao.todos();
         listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
-        listaDeAlunos.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dao.todos()));
+        listaDeAlunos.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos));
+
+        listaDeAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Aluno alunoEscolhido = alunos.get(position);
+                Intent vaiParaFormularioActivity = new Intent(ListaAlunosActivity.this, FormularioAlunoActivity.class);
+                vaiParaFormularioActivity.putExtra("chaveAluno", alunoEscolhido);
+                startActivity(vaiParaFormularioActivity);
+            }
+        });
     }
 }
