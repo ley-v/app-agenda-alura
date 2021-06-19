@@ -3,6 +3,7 @@ package alura.agenda.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,7 +40,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setTitle(TITULO_APPBAR);
         configuraFabNovoAluno();
         configuraLista();
-
+        
         dao.salvar(new Aluno("Milly", "111", "milly@gmail.com"));
         dao.salvar(new Aluno("Britt", "222", "britt@gmail.com"));
     }
@@ -61,6 +62,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
         }
         return super.onContextItemSelected(item);
     }
+
+
 
     private void configuraFabNovoAluno() {
         FloatingActionButton botaoNovoAluno = findViewById(R.id.activity_lista_alunos_fab_novo_aluno);
