@@ -46,8 +46,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         configuraFabNovoAluno();
         configuraLista();
 
-        dao.salvar(new Aluno("Milly", "111", "milly@gmail.com"));
-        dao.salvar(new Aluno("Britt", "222", "britt@gmail.com"));
+
     }
 
     @Override
@@ -91,8 +90,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void atualizaAlunos() {
-        adapter.clear();
-        adapter.addAll(dao.todos());
+        adapter.atualiza(dao.todos());
     }
 
     private void configuraLista() {
