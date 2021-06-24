@@ -14,8 +14,8 @@ import alura.agenda.R;
 import alura.agenda.model.Aluno;
 
 public class ListaAlunosAdapter extends BaseAdapter {
-    List<Aluno> alunos = new ArrayList<>();
-    private Context contexto;
+    final List<Aluno> alunos = new ArrayList<>();
+    private final Context contexto;
 
     public ListaAlunosAdapter(Context contexto) {
         this.contexto = contexto;
