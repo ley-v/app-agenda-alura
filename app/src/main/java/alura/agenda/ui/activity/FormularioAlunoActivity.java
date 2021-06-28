@@ -10,7 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import alura.agenda.R;
-import alura.agenda.dao.AlunoDAO;
+import alura.agenda.database.AgendaDatabase;
+import alura.agenda.database.dao.AlunoDAO;
 import alura.agenda.model.Aluno;
 
 import static alura.agenda.ui.activity.ConstantesActivities.CHAVE_ALUNO;
@@ -23,13 +24,14 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private EditText campoTelefone;
     private EditText campoEmail;
 
-    private final AlunoDAO dao = new AlunoDAO();
+    private AlunoDAO dao;
     private Aluno aluno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_aluno);
+        dao = AgendaDatabase.getInstance(this).getRoomAlunoDAO();
         inicializacaoDosCampos();
         carregaAluno();
     }
@@ -43,7 +45,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.activity_formulario_aluno_menu_salvar){
+        if (itemId == R.id.activity_formulario_aluno_menu_salvar) {
             finalizaFormulario();
         }
         return super.onOptionsItemSelected(item);
@@ -55,7 +57,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
             setTitle(TITULO_APPBAR_EDITA_ALUNO);
             aluno = (Aluno) dados.getSerializableExtra(CHAVE_ALUNO);
             preencheCampos();
-        } else{
+        } else {
             setTitle(TITULO_APPBAR_NOVO_ALUNO);
             aluno = new Aluno();
         }
