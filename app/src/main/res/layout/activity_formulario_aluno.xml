@@ -20,17 +20,8 @@
             android:layout_margin="8dp"
             android:hint="@string/nome"
             android:importantForAutofill="no"
-            android:inputType="textCapWords" />
-
-        <EditText
-            android:id="@+id/activity_formulario_aluno_sobrenome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:hint="@string/Sobrenome"
-            android:importantForAutofill="no"
             android:inputType="textCapWords"
-            tools:targetApi="o" />
+            />
 
         <EditText
             android:id="@+id/activity_formulario_aluno_telefone"
