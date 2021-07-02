@@ -24,13 +24,23 @@
             />
 
         <EditText
-            android:id="@+id/activity_formulario_aluno_telefone"
+            android:id="@+id/activity_formulario_aluno_telefone_fixo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
-            android:hint="@string/telefone"
+            android:hint="@string/telefone_fixo"
             android:inputType="phone"
             app:layout_constraintTop_toBottomOf="@id/activity_formulario_aluno_nome"
+            />
+
+        <EditText
+            android:id="@+id/activity_formulario_aluno_telefone_celular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:hint="@string/telefone_celular"
+            android:inputType="phone"
+            app:layout_constraintTop_toBottomOf="@id/activity_formulario_aluno_telefone_fixo"
             />
 
         <EditText
@@ -40,7 +50,7 @@
             android:layout_marginHorizontal="12dp"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
-            app:layout_constraintTop_toBottomOf="@id/activity_formulario_aluno_telefone"
+            app:layout_constraintTop_toBottomOf="@id/activity_formulario_aluno_telefone_celular"
         />
 
 
