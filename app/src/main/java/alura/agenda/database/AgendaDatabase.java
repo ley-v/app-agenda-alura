@@ -22,8 +22,9 @@ public abstract class AgendaDatabase extends RoomDatabase {
 
     private static final String NOME_BANCO_DE_DADOS = "agenda.db";
 
-
     public abstract AlunoDAO getRoomAlunoDAO();
+
+    public abstract TelefoneDAO getTelefoneDAO();
 
     public static AgendaDatabase getInstance(Context context) {
         return Room.databaseBuilder(context, AgendaDatabase.class, NOME_BANCO_DE_DADOS)
@@ -31,6 +32,4 @@ public abstract class AgendaDatabase extends RoomDatabase {
                 .addMigrations(TODAS_MIGRATIONS)
                 .build();
     }
-
-    public abstract TelefoneDAO getTelefoneDAO();
 }

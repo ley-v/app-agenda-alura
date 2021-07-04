@@ -19,9 +19,12 @@ import alura.agenda.model.Telefone;
 public class ListaAlunosAdapter extends BaseAdapter {
     final List<Aluno> alunos = new ArrayList<>();
     private final Context contexto;
+    private final TelefoneDAO dao;
 
     public ListaAlunosAdapter(Context contexto) {
         this.contexto = contexto;
+        dao = AgendaDatabase.getInstance(contexto).getTelefoneDAO();
+
     }
 
     @Override
@@ -51,9 +54,8 @@ public class ListaAlunosAdapter extends BaseAdapter {
         TextView nome = viewCriada.findViewById(R.id.item_aluno_nome);
         nome.setText(alunoDevolvido.getNome() + " " + alunoDevolvido.dataFormatada());
         TextView telefone = viewCriada.findViewById(R.id.item_aluno_telefone);
-        TelefoneDAO dao = AgendaDatabase.getInstance(contexto).getTelefoneDAO();
         Telefone primeiroTelefone = dao.buscaPrimeiroTelefoneDoAluno(alunoDevolvido.getId());
-        telefone.setText(primeiroTelefone.getNumero());
+        if (primeiroTelefone != null) telefone.setText(primeiroTelefone.getNumero());
     }
 
     private View criaView(ViewGroup parent) {
