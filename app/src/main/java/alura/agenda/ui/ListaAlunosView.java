@@ -8,6 +8,8 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AlertDialog;
 
+import alura.agenda.asynctask.BuscaAlunoTask;
+import alura.agenda.asynctask.RemoveAlunoTask;
 import alura.agenda.database.AgendaDatabase;
 import alura.agenda.database.dao.AlunoDAO;
 import alura.agenda.model.Aluno;
@@ -42,12 +44,12 @@ public class ListaAlunosView {
     }
 
     public void atualizaAlunos() {
-        adapter.atualiza(dao.todos());
+        new BuscaAlunoTask(dao, adapter).execute();
     }
 
     public void remove(Aluno aluno) {
-        dao.remover(aluno);
-        adapter.remove(aluno);
+        new RemoveAlunoTask(dao, aluno, adapter).execute();
+
     }
 
     public void configuraAdapter(ListView listaDeAlunos) {
